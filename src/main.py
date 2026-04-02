@@ -2,6 +2,7 @@ import logging
 from src.api.hh_client import HHClient
 from src.config import EMPLOYER_IDS
 from src.db.repository import create_tables, insert_employers, insert_vacancies
+from src.cli import run_cli
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -34,7 +35,12 @@ def main():
     if all_vacancies:
         insert_vacancies(all_vacancies)
 
-    logger.info("Загрузка завершена.")
+    logger.info("Загрузка данных завершена.")
+
+    # 6. Запускаем пользовательский интерфейс для аналитики
+    print("\nДанные успешно загружены в базу.")
+    run_cli()
 
 if __name__ == "__main__":
     main()
+

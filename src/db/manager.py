@@ -1,5 +1,6 @@
 from src.db.repository import get_connection
 
+
 class DBManager:
     """Класс для работы с данными в БД."""
 
@@ -107,10 +108,13 @@ class DBManager:
         with get_connection() as conn:
             with conn.cursor() as cur:
                 # Используем ILIKE для регистронезависимого поиска
-                cur.execute("""
+                cur.execute(
+                    """
                     SELECT v.name, e.name, v.salary_from, v.salary_to, v.currency, v.url
                     FROM vacancies v
                     JOIN employers e ON v.employer_id = e.id
                     WHERE v.name ILIKE %s;
-                """, (f'%{keyword}%',))
+                """,
+                    (f"%{keyword}%",),
+                )
                 return cur.fetchall()
